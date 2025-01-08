@@ -1,0 +1,80 @@
+import React from 'react'
+
+const SubmittedFormTable = ({ agents }) => {
+  return (
+    <div className="overflow-x-auto p-4">
+      <table className="w-full text-left border-collapse border border-gray-200">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="p-2 border border-gray-200">SN</th>
+            <th className="p-2 border border-gray-200">IATA</th>
+            <th className="p-2 border border-gray-200">Status</th>
+            <th className="p-2 border border-gray-200">Agency Name</th>
+            <th className="p-2 border border-gray-200">Contact Details</th>
+            <th className="p-2 border border-gray-200">Registration Date</th>
+            <th className="p-2 border border-gray-200">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {agents.map((item, index) => (
+            <tr key={index} className="hover:bg-gray-50">
+              {/* Serial Number */}
+              <td className="p-2 border border-gray-200">{index + 1}</td>
+
+              {/* IATA */}
+              <td className="p-2 border border-gray-200">
+                {item.isIATA ? "IATA" : "Non-IATA"}
+              </td>
+
+              {/* Status */}
+              <td className="p-2 border border-gray-200">
+                <span className="px-2 py-1 text-white bg-red-500 rounded-full text-xs">
+                  No
+                </span>
+              </td>
+
+              {/* Agency Name */}
+              <td className="p-2 border border-gray-200">
+                <div className="font-semibold">{item.agencyName}</div>
+                <div className="text-sm text-gray-600">{item.locationState}</div>
+              </td>
+
+              {/* Contact Details */}
+              <td className="p-2 border border-gray-200">
+                <div>{item.address}</div>
+                <div className="text-sm text-gray-600">{item.email}</div>
+                <div className="text-sm text-gray-600">{item.telephone}</div>
+              </td>
+
+              {/* Registration Date */}
+              <td className="p-2 border border-gray-200">
+                {new Date(item.registrationDate).toLocaleDateString("en-US", {
+                  weekday: "short",
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </td>
+
+              {/* Action */}
+              <td className="p-2 border border-gray-200">
+                <div className="relative">
+                  <button className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md">
+                    Action
+                  </button>
+                  <div className="absolute right-0 hidden mt-2 bg-white border rounded-md shadow-lg group-hover:block">
+                    <ul>
+                      <li className="p-2 hover:bg-gray-100 cursor-pointer">View More</li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+export default SubmittedFormTable
