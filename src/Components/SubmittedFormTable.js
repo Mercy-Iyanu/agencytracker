@@ -1,8 +1,43 @@
-import React from 'react'
+import React from 'react';
+import { FaDownload } from "react-icons/fa";
+import { saveAs } from "file-saver";
+import Papa from "papaparse";
 
 const SubmittedFormTable = ({ agents }) => {
+    const exportToCSV = () => {
+        const csvData = agents.map((entry, index) => ({
+          sn: index + 1,
+          "Agency Name": entry.agencyName,
+          "IATA/Non-IATA": entry.iataStatus,
+          Email: entry.email,
+          Telephone: entry.telephone,
+          Address: entry.address,
+          "Location State": entry.locationState,
+          "Registered Date": new Date().toLocaleDateString("en-US", {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }),
+        }));
+    
+        const csv = Papa.unparse(csvData);
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        saveAs(blob, "submissions.csv");
+      };
+
   return (
     <div className="overflow-x-auto p-4">
+        <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Travel Agents List</h2>
+            <button
+            onClick={exportToCSV}
+            className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            >
+            <FaDownload className="mr-2" />
+            Export Submissions
+            </button>
+        </div>
       <table className="w-full text-left border-collapse border border-gray-200">
         <thead>
           <tr className="bg-gray-100">
