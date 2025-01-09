@@ -1,111 +1,85 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import SearchForm from './SearchForm';
 import AgencyForm from './AgencyForm';
 import SubmittedFormTable from './SubmittedFormTable';
-<<<<<<< HEAD
-=======
-import SearchForms from './SearchForms';
->>>>>>> b5d1672e0cf4ecaa35e87291b4c24802005db3b7
 import Analytics from './Analytics';
 
 const Dashboard = ({ data }) => {
-    const [agents, setAgents] = useState([]);
+  const [agents, setAgents] = useState([]);
+  const [filteredAgents, setFilteredAgents] = useState([]);
 
-    const handleAddAgent = (agentData) => {
-        setAgents((prevAgents) => [...prevAgents, agentData]);
-    };
+  const handleAddAgent = (agentData) => {
+    setAgents((prevAgents) => {
+      const newAgents = [...prevAgents, agentData];
+      setFilteredAgents(newAgents);
+      return newAgents;
+    });
+  };
 
-    const totalSubmissions = agents.length;
-    const newSubmissions = agents.filter((item) => {
-        const today = new Date();
-        const submissionDate = new Date(item.registrationDate);
-        const daysDifference = Math.floor(
-        (today - submissionDate) / (1000 * 60 * 60 * 24)
-        );
-        return daysDifference <= 2;
-    }).length;
+  const handleSearch = (filters) => {
+    let result = agents;
 
-<<<<<<< HEAD
-=======
-    const [filteredData, setFilteredData] = useState(data);
-    const handleSearch = (filters) => {
-        let filtered = data;
-
-        if (filters.agencyName) {
-        filtered = filtered.filter((entry) =>
-            entry.agencyName.toLowerCase().includes(filters.agencyName.toLowerCase())
-        );
-        }
-
-        if (filters.agencyEmail) {
-        filtered = filtered.filter((entry) =>
-            entry.email.toLowerCase().includes(filters.agencyEmail.toLowerCase())
-        );
-        }
-
-        if (filters.agencyAddress) {
-        filtered = filtered.filter((entry) =>
-            entry.address.toLowerCase().includes(filters.agencyAddress.toLowerCase())
-        );
-        }
-
-        if (filters.status !== "All Submissions") {
-        // Implement status filtering logic based on your data structure
-        }
-
-        if (filters.iataStatus !== "All") {
-        filtered = filtered.filter((entry) => entry.iataStatus === filters.iataStatus);
-        }
-
-        if (filters.startDate && filters.endDate) {
+    if (filters.agencyName) {
+      result = result.filter((agent) =>
+        agent.agencyName.toLowerCase().includes(filters.agencyName.toLowerCase())
+      );
+    }
+    if (filters.email) {
+      result = result.filter((agent) =>
+        agent.email.toLowerCase().includes(filters.email.toLowerCase())
+      );
+    }
+    if (filters.address) {
+      result = result.filter((agent) =>
+        agent.address.toLowerCase().includes(filters.address.toLowerCase())
+      );
+    }
+    if (filters.status && filters.status !== 'all') {
+      result = result.filter((agent) => agent.status === filters.status);
+    }
+    if (filters.iataStatus) {
+      result = result.filter((agent) => agent.iataStatus === filters.iataStatus);
+    }
+    if (filters.startDate && filters.endDate) {
+      result = result.filter((agent) => {
+        const registrationDate = new Date(agent.registrationDate);
         const startDate = new Date(filters.startDate);
         const endDate = new Date(filters.endDate);
+        return registrationDate >= startDate && registrationDate <= endDate;
+      });
+    }
 
-        filtered = filtered.filter((entry) => {
-            const registeredDate = new Date(entry.registrationDate);
-            return registeredDate >= startDate && registeredDate <= endDate;
-        });
-        }
+    setFilteredAgents(result); 
+  };
 
-        setFilteredData(filtered);
-    };
+  const totalSubmissions = filteredAgents.length;
+  const newSubmissions = filteredAgents.filter((item) => {
+    const today = new Date();
+    const submissionDate = new Date(item.registrationDate);
+    const daysDifference = Math.floor(
+      (today - submissionDate) / (1000 * 60 * 60 * 24)
+    );
+    return daysDifference <= 2;
+  }).length;
 
->>>>>>> b5d1672e0cf4ecaa35e87291b4c24802005db3b7
   return (
     <div>
-        <Analytics
-            totalSubmissions={totalSubmissions}
-            newSubmissions={newSubmissions}
-        />
-        <div className="flex flex-row gap-4 p-4 h-screen bg-gray-100">
-<<<<<<< HEAD
-=======
-            {/* Table Section (70%) */}
->>>>>>> b5d1672e0cf4ecaa35e87291b4c24802005db3b7
-            <div className="w-2/3 p-4">
-                <SubmittedFormTable agents={agents} />
-            </div>
-
-<<<<<<< HEAD
-            <div className="w-1/3 p-4 border-l">
-                <AgencyForm onAddAgent={handleAddAgent} />
-            </div>
-            <div className="grid grid-cols-3 gap-4">
-                <div className="col-span-1">
-=======
-            {/* Form Section (30%) */}
-            <div className="w-1/3 p-4 border-l">
-                <AgencyForm onAddAgent={handleAddAgent} />
-                {/* <SearchForms onSearch={handleSearch} /> */}
-            </div>
-            <div className="grid grid-cols-3 gap-4">
-                <div className="col-span-1">
-                    {/* <SearchForms onSearch={handleSearch} /> */}
->>>>>>> b5d1672e0cf4ecaa35e87291b4c24802005db3b7
-                </div>
-            </div>
+      <Analytics
+        totalSubmissions={totalSubmissions}
+        newSubmissions={newSubmissions}
+      />
+      <div className="flex flex-row gap-4 p-4 h-screen bg-gray-100">
+        <div className="w-2/3 p-4">
+          <SubmittedFormTable agents={filteredAgents} />
         </div>
-    </div>
-  )
-}
 
-export default Dashboard
+        <div className="w-1/3 p-4 border-l">
+          <AgencyForm onAddAgent={handleAddAgent} className='pb-8'/>
+          <SearchForm onSearch={handleSearch} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

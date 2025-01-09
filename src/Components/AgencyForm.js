@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { FaBuilding, FaMapMarkerAlt, FaMapMarkedAlt, FaEnvelope, FaPhone, FaIdBadge, FaCalendarAlt } from 'react-icons/fa';
+import { FaBuilding, FaMapMarkerAlt, FaMapMarkedAlt, FaEnvelope, FaPhone, FaIdBadge } from 'react-icons/fa';
 
 const AgencyForm = ({ onAddAgent }) => {
     const [formData, setFormData] = useState({
@@ -9,8 +9,7 @@ const AgencyForm = ({ onAddAgent }) => {
         address: '',
         email: '',
         telephone: '',
-        iataNo: '',
-        registrationDate: '',
+        iataNo: ''
       });
     
       const handleChange = (e) => {
@@ -20,7 +19,11 @@ const AgencyForm = ({ onAddAgent }) => {
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        onAddAgent(formData);
+        const updatedFormData = {
+          ...formData,
+          registrationDate: new Date().toISOString(),
+        };
+        onAddAgent(updatedFormData);
         setFormData({
           agencyName: '',
           iataStatus: '',
@@ -28,12 +31,12 @@ const AgencyForm = ({ onAddAgent }) => {
           address: '',
           email: '',
           telephone: '',
-          iataNo: '',
-          registrationDate: '',
+          iataNo: ''
         });
       };
   return (
     <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-6 py-4 space-y-4">
+      <h3>Agency Form</h3>
       <div className="flex items-center space-x-2">
         <FaBuilding className="text-gray-600" />
         <input
@@ -111,16 +114,6 @@ const AgencyForm = ({ onAddAgent }) => {
           value={formData.telephone}
           onChange={handleChange}
           placeholder="Telephone"
-          className="w-full border rounded px-2 py-1"
-        />
-      </div>
-      <div className="flex items-center space-x-2">
-        <FaCalendarAlt className="text-gray-600" />
-        <input
-          type="date"
-          name="registrationDate"
-          value={formData.registrationDate}
-          onChange={handleChange}
           className="w-full border rounded px-2 py-1"
         />
       </div>
