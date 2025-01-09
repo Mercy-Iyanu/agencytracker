@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 const Analytics = ({ totalSubmissions, newSubmissions }) => {
   return (
-    <div className="grid grid-cols-4 gap-4 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
       <div className="p-4 bg-green-100 border-l-4 border-green-500 rounded-md shadow">
         <h3 className="text-lg font-bold text-green-600">Total Submissions</h3>
         <p className="text-3xl font-semibold">{totalSubmissions}</p>
@@ -23,7 +23,7 @@ const Analytics = ({ totalSubmissions, newSubmissions }) => {
         <p className="text-3xl font-semibold">0</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Analytics
+export default Analytics;

@@ -68,12 +68,12 @@ const Dashboard = ({ data }) => {
         totalSubmissions={totalSubmissions}
         newSubmissions={newSubmissions}
       />
-      <div className="flex flex-row gap-4 p-4 h-screen bg-gray-100">
-        <div className="w-2/3 p-4">
+      <div className="flex flex-col md:flex-row gap-4 p-4 h-screen bg-gray-100">
+        <div className="w-full md:w-2/3 p-4">
           <SubmittedFormTable agents={filteredAgents} />
         </div>
 
-        <div className="w-1/3 p-4 border-l">
+        <div className="w-full md:w-1/3 p-4 border-l">
           <AgencyForm onAddAgent={handleAddAgent} className='pb-8'/>
           <SearchForm onSearch={handleSearch} />
         </div>
