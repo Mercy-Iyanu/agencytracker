@@ -74,7 +74,7 @@ const Dashboard = ({ data }) => {
         </div>
 
         <div className="w-full md:w-1/3 p-4 border-l">
-          <AgencyForm onAddAgent={handleAddAgent} className='pb-8'/>
+          {/* <AgencyForm onAddAgent={handleAddAgent} className='pb-8'/>   */}
           <SearchForm onSearch={handleSearch} />
         </div>
       </div>

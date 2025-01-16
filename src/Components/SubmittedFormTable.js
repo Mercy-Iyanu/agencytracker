@@ -1,10 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { FaDownload } from "react-icons/fa";
 import { saveAs } from "file-saver";
+import axios from 'axios';
 import Papa from "papaparse";
 
-const SubmittedFormTable = ({ agents }) => {
+const SubmittedFormTable = ({  }) => {
+    const [agents, setAgents] = useState([]);
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+
+    useEffect (() => {
+      const fetchAgents = async () => {
+        try {
+          const response = await axios.get('http://localhost:5000/api/agents');
+          setAgents(response.data);
+        } catch (error) {
+          console.error('Error fetching agents:', error)
+        }
+      };
+      fetchAgents();
+    })
 
     const toggleDropdown = (index) => {
       setOpenDropdownIndex((prevIndex) => (prevIndex === index ? null : index));
