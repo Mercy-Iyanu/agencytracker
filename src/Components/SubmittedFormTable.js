@@ -115,7 +115,7 @@ const SubmittedFormTable = ({  }) => {
                   {openDropdownIndex === index && (
                     <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-lg group-hover:block">
                       <ul>
-                        <li className="p-2 hover:bg-gray-100 cursor-pointer">View More</li>
+                        <li className="p-2 hover:bg-gray-100 cursor-pointer">Full Details</li>
                       </ul>
                     </div>
                   )}  
