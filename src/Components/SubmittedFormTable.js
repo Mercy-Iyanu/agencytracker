@@ -53,8 +53,8 @@ const SubmittedFormTable = ({  }) => {
             onClick={exportToCSV}
             className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
-            <FaDownload className="mr-2" />
-            Export Submissions
+              <FaDownload className="mr-2" />
+              Export Submissions
             </button>
         </div>
       <table className="w-full text-left border-collapse border border-gray-200">
